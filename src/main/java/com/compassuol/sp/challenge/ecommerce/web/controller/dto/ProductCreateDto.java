@@ -1,4 +1,4 @@
-package com.compassuol.sp.challenge.ecommerce.web.dto;
+package com.compassuol.sp.challenge.ecommerce.web.controller.dto;
 
 
 import jakarta.persistence.UniqueConstraint;

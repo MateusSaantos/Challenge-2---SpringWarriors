@@ -1,4 +1,4 @@
-package com.compassuol.sp.challenge.ecommerce.service;
+package com.compassuol.sp.challenge.ecommerce.services;
 
 
 import com.compassuol.sp.challenge.ecommerce.entities.Product;
@@ -25,6 +25,7 @@ public class ProductService {
 
         return prod;
     }
+
     @Transactional(readOnly = true)
     public Product getById(Long id) {
         return productRepository.findById(id).orElseThrow(
@@ -33,6 +34,9 @@ public class ProductService {
     }
 
 
-
+    @Transactional
+    public Product create(Product product) {
+        return productRepository.save(product);
+    }
 
 }

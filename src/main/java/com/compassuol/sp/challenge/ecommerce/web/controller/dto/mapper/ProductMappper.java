@@ -1,9 +1,9 @@
-package com.compassuol.sp.challenge.ecommerce.web.dto.mapper;
+package com.compassuol.sp.challenge.ecommerce.web.controller.dto.mapper;
 
 
 import com.compassuol.sp.challenge.ecommerce.entities.Product;
-import com.compassuol.sp.challenge.ecommerce.web.dto.ProductCreateDto;
-import com.compassuol.sp.challenge.ecommerce.web.dto.ProductResponseDto;
+import com.compassuol.sp.challenge.ecommerce.web.controller.dto.ProductCreateDto;
+import com.compassuol.sp.challenge.ecommerce.web.controller.dto.ProductResponseDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 

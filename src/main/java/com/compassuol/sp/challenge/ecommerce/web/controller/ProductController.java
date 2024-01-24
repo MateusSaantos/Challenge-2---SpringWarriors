@@ -2,10 +2,10 @@ package com.compassuol.sp.challenge.ecommerce.web.controller;
 
 
 import com.compassuol.sp.challenge.ecommerce.entities.Product;
-import com.compassuol.sp.challenge.ecommerce.service.ProductService;
-import com.compassuol.sp.challenge.ecommerce.web.dto.ProductCreateDto;
-import com.compassuol.sp.challenge.ecommerce.web.dto.ProductResponseDto;
-import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.ProductMappper;
+import com.compassuol.sp.challenge.ecommerce.services.ProductService;
+import com.compassuol.sp.challenge.ecommerce.web.controller.dto.ProductCreateDto;
+import com.compassuol.sp.challenge.ecommerce.web.controller.dto.ProductResponseDto;
+import com.compassuol.sp.challenge.ecommerce.web.controller.dto.mapper.ProductMappper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,11 +22,8 @@ public class ProductController {
     private final ProductService productService;
 
 
-
-
-
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponseDto> getById(@PathVariable Long id){
+    public ResponseEntity<ProductResponseDto> getById(@PathVariable Long id) {
         Product prod = productService.getById(id);
         return ResponseEntity.ok(ProductMappper.toDto(prod));
 
@@ -34,13 +31,17 @@ public class ProductController {
     }
 
 
-
     @PutMapping("/{id}")
-    public ResponseEntity <ProductResponseDto> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductCreateDto product){
+    public ResponseEntity<ProductResponseDto> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductCreateDto product) {
         Product prod = productService.updateProduct(id, ProductMappper.toProduct(product));
         return ResponseEntity.ok(ProductMappper.toDto(prod));
 
     }
 
 
+    @PostMapping
+    public ResponseEntity<ProductResponseDto> create(@Valid @RequestBody ProductCreateDto productDto) {
+        Product createdProduct = productService.create(ProductMappper.toProduct(productDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ProductMappper.toDto(createdProduct));
+    }
 }
