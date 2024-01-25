@@ -26,14 +26,17 @@ public class ProductController {
     private final ProductService productService;
 
 
+    @GetMapping
+    public ResponseEntity<List<ProductResponseDto>> getAll(){
+        List<Product> products = productService.getAll();
+        return ResponseEntity.ok(ProductMappper.toListDto(products));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDto> getById(@PathVariable Long id) {
         Product prod = productService.getById(id);
         return ResponseEntity.ok(ProductMappper.toDto(prod));
-
-
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDto> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductCreateDto product) {
@@ -41,7 +44,6 @@ public class ProductController {
         return ResponseEntity.ok(ProductMappper.toDto(prod));
 
     }
-
 
     @PostMapping
     public ResponseEntity<ProductResponseDto> create(@Valid @RequestBody ProductCreateDto productDto) {

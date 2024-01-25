@@ -15,6 +15,17 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
+    @Transactional(readOnly = true)
+    public List<Product> getAll(){
+        return productRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Product getById(Long id) {
+        return productRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Produto não encontrado.")
+        );
+    }
     @Transactional
     public Product updateProduct(Long id, Product product) {
 
@@ -25,14 +36,6 @@ public class ProductService {
 
         return prod;
     }
-
-    @Transactional(readOnly = true)
-    public Product getById(Long id) {
-        return productRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Produto não encontrado.")
-        );
-    }
-
 
     @Transactional
     public Product create(Product product) {
