@@ -1,4 +1,4 @@
-package com.compassuol.sp.challenge.ecommerce.web.controller.dto;
+package com.compassuol.sp.challenge.ecommerce.web.dto;
 
 import lombok.*;
 
