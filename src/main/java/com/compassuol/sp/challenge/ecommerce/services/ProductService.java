@@ -6,6 +6,7 @@ import com.compassuol.sp.challenge.ecommerce.exception.DuplicateProductNameExcep
 import com.compassuol.sp.challenge.ecommerce.exception.EntityNotFoundException;
 import com.compassuol.sp.challenge.ecommerce.exception.ProductValidationException;
 import com.compassuol.sp.challenge.ecommerce.repository.ProductRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,7 @@ public class ProductService {
 
         if(productRepository.existsByNameAndIdNot(productName, id))
         {
-            throw new DuplicateProductNameException(String.format("Produto com nome %s ja existente", productName));
+            throw new DuplicateProductNameException(String.format("Produto com nome %s ja existe", productName));
         }
 
         Product prod = getById(id);
@@ -48,12 +49,14 @@ public class ProductService {
     }
 
     @Transactional
-    public Product create(Product product) {
+    public Product create( Product product) {
+        if(productRepository.existsByName(product.getName()))
+            throw new DuplicateProductNameException(String.format("Produto com nome {%s} já existe",product.getName()));
         try {
             return productRepository.save(product);
         }
         catch (org.springframework.dao.DataIntegrityViolationException ex){
-            throw new ProductValidationException("Dados fornecidos inválidos");
+            throw new ProductValidationException("Campo(s) invalidos");
         }
     }
 

@@ -15,18 +15,16 @@ import java.util.Map;
 @Getter @ToString
 public class ErrorMessage {
 
-    private String path;
 
-    private String method;
 
-    private String statusText;
-
+    private String status;
+    private int code;
     private String message;
 
-    private int status;
+
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Map<String,String> errors;
+    private Map<String,String> details;
 
 
 
@@ -34,26 +32,22 @@ public class ErrorMessage {
 
     }
 
-    public ErrorMessage(HttpServletRequest request, HttpStatus status, String message){
-        this.path = request.getRequestURI();
-        this.method= request.getMethod();
-        this.status = status.value();
-        this.statusText=status.getReasonPhrase();
+    public ErrorMessage(HttpServletRequest request, HttpStatus code, String message){
+        this.code = code.value();
+        this.status = code.getReasonPhrase();
         this.message= message;
     }
-    public ErrorMessage(HttpServletRequest request, HttpStatus status, String message, BindingResult result){
-        this.path = request.getRequestURI();
-        this.method= request.getMethod();
-        this.status = status.value();
-        this.statusText=status.getReasonPhrase();
+    public ErrorMessage(HttpServletRequest request, HttpStatus code, String message, BindingResult result){
+        this.code = code.value();
+        this.status = code.getReasonPhrase();
         this.message= message;
         addErrors(result);
     }
 
     private void addErrors(BindingResult result) {
-        this.errors = new HashMap<>();
+        this.details = new HashMap<>();
         for(FieldError fieldError: result.getFieldErrors()){
-            this.errors.put(fieldError.getField(),fieldError.getDefaultMessage());
+            this.details.put(fieldError.getField(),fieldError.getDefaultMessage());
         }
     }
 
