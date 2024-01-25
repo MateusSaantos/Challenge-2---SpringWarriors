@@ -1,6 +1,7 @@
 package com.compassuol.sp.challenge.ecommerce.web.exception;
 
 
+import com.compassuol.sp.challenge.ecommerce.exception.DuplicateProductNameException;
 import com.compassuol.sp.challenge.ecommerce.exception.EntityNotFoundException;
 import com.compassuol.sp.challenge.ecommerce.exception.ProductValidationException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +33,7 @@ public class ApiExceptionHandler {
                 .body(new ErrorMessage(request,HttpStatus.UNPROCESSABLE_ENTITY,"Campo(s) invalidos",result));
     }
 
-    @ExceptionHandler(ProductValidationException.class)
+    @ExceptionHandler({ProductValidationException.class, DuplicateProductNameException.class})
     public ResponseEntity<ErrorMessage> dataIntegrityViolationException(RuntimeException ex,
                                                                         HttpServletRequest request
                                                                         ){

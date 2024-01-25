@@ -2,6 +2,7 @@ package com.compassuol.sp.challenge.ecommerce.services;
 
 
 import com.compassuol.sp.challenge.ecommerce.entities.Product;
+import com.compassuol.sp.challenge.ecommerce.exception.DuplicateProductNameException;
 import com.compassuol.sp.challenge.ecommerce.exception.EntityNotFoundException;
 import com.compassuol.sp.challenge.ecommerce.exception.ProductValidationException;
 import com.compassuol.sp.challenge.ecommerce.repository.ProductRepository;
@@ -32,14 +33,19 @@ public class ProductService {
     @Transactional
     public Product updateProduct(Long id, Product product) {
 
+        String productName = product.getName();
+
+        if(productRepository.existsByNameAndIdNot(productName, id))
+        {
+            throw new DuplicateProductNameException(String.format("Produto com nome %s ja existente", productName));
+        }
+
         Product prod = getById(id);
         prod.setDescription(product.getDescription());
         prod.setValue(product.getValue());
         prod.setName(product.getName());
-
         return prod;
     }
-
 
     @Transactional
     public Product create(Product product) {
@@ -53,7 +59,8 @@ public class ProductService {
 
     @Transactional
     public void deleteById(Long id) {
-        productRepository.deleteById(id);
+        Product product = getById(id);
+        productRepository.delete(product);
     }
 
 }
