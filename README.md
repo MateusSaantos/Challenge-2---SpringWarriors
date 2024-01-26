@@ -44,6 +44,10 @@ O Spring é um framework de desenvolvimento em Java que simplifica a criação d
 
 #### - Banco de Dados Relacional MySQL:
 MySQL é um sistema de gerenciamento de banco de dados relacional amplamente utilizado. 
+Executar seguinte comando SQL no Workbeanch e preencher os dados de usuário:
+SQL: CREATE SCHEMA e_commerce DEFAULT CHARACTER SET utf8
+spring.datasource.username = (Nome do usuario exemplo root)
+spring.datasource.password = (Senha de acesso)
 
 #### - Git:
 Sistema de controle de versão amplamente usado para rastreamento e gerenciamento de alterações no código-fonte.
