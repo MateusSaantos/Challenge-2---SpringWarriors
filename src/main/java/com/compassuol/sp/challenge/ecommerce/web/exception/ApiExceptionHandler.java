@@ -41,7 +41,11 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .contentType(MediaType.APPLICATION_JSON)
+<<<<<<< HEAD
                 .body(new ErrorMessage(request,HttpStatus.CONFLICT, ex.getMessage()));
+=======
+                .body(new ErrorMessage(request,HttpStatus.CONFLICT,"Produto já existente"));
+>>>>>>> documentation
 
     }
 
