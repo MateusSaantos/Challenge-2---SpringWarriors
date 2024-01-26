@@ -6,7 +6,6 @@ import com.compassuol.sp.challenge.ecommerce.exception.DuplicateProductNameExcep
 import com.compassuol.sp.challenge.ecommerce.exception.EntityNotFoundException;
 import com.compassuol.sp.challenge.ecommerce.exception.ProductValidationException;
 import com.compassuol.sp.challenge.ecommerce.repository.ProductRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

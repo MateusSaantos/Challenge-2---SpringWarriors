@@ -6,13 +6,7 @@ import com.compassuol.sp.challenge.ecommerce.exception.EntityNotFoundException;
 import com.compassuol.sp.challenge.ecommerce.exception.ProductValidationException;
 import com.compassuol.sp.challenge.ecommerce.repository.ProductRepository;
 import com.compassuol.sp.challenge.ecommerce.services.ProductService;
-
-import static com.compassuol.sp.challenge.ecommerce.common.ProductConstants.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,6 +14,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.compassuol.sp.challenge.ecommerce.common.ProductConstants.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest(classes = ProductService.class)
 public class ProductServiceTest {

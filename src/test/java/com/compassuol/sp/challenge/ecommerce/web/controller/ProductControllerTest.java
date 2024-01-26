@@ -6,21 +6,14 @@ import com.compassuol.sp.challenge.ecommerce.exception.DuplicateProductNameExcep
 import com.compassuol.sp.challenge.ecommerce.exception.EntityNotFoundException;
 import com.compassuol.sp.challenge.ecommerce.repository.ProductRepository;
 import com.compassuol.sp.challenge.ecommerce.services.ProductService;
-import com.compassuol.sp.challenge.ecommerce.web.controller.ProductController;
-import com.compassuol.sp.challenge.ecommerce.web.controller.dto.ProductCreateDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvc.*;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static com.compassuol.sp.challenge.ecommerce.common.ProductConstants.*;

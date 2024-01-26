@@ -1,7 +1,6 @@
 package com.compassuol.sp.challenge.ecommerce.web.dto;
 
 
-import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
