@@ -35,7 +35,6 @@ public class ProductService {
     public Product updateProduct(Long id, Product product) {
 
         String productName = product.getName();
-
         if(productRepository.existsByNameAndIdNot(productName, id))
         {
             throw new DuplicateProductNameException(String.format("Produto com nome %s ja existe", productName));
