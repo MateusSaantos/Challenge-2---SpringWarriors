@@ -7,6 +7,7 @@ import com.compassuol.sp.challenge.ecommerce.exception.EntityNotFoundException;
 import com.compassuol.sp.challenge.ecommerce.repository.ProductRepository;
 import com.compassuol.sp.challenge.ecommerce.services.ProductService;
 import com.compassuol.sp.challenge.ecommerce.web.controller.ProductController;
+import com.compassuol.sp.challenge.ecommerce.web.controller.dto.ProductCreateDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -24,8 +25,7 @@ import java.util.List;
 
 import static com.compassuol.sp.challenge.ecommerce.common.ProductConstants.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,6 +40,9 @@ public class ProductControllerTest {
 
     @MockBean
     private ProductService productService;
+
+    @MockBean
+    private ProductRepository productRepository;
 
     @Test
     public void createProduct_WithValidData_ReturnsStatus201() throws Exception {
@@ -72,13 +75,24 @@ public class ProductControllerTest {
                         .content(objectMapper.writeValueAsString(INVALID_PRODUCT_REPEATED_NAME)))
                 .andExpect(status().isConflict() );
     }
+
+    @Test
+    public void updateProduct_WithValidDataAndId_ReturnStatus200() throws Exception {
+        when(productService.updateProduct(anyLong(), any(Product.class))).thenReturn(UPDATED_PRODUCT);
+
+        mockMvc.perform(put("/products/1")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(UPDATED_PRODUCT)))
+                .andExpect(status().isOk());
+    }
+
     @Test
     public void getProduct_WithExistentId_ReturnsStatus200() throws Exception {
         when(productService.getById(anyLong())).thenReturn(PRODUCT);
 
         mockMvc.perform(get("/products/1"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(PRODUCT)));
+                .andExpect(content().json(objectMapper.writeValueAsString(PRODUCT)))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -101,9 +115,15 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void getAllProducts_ReturnStatus404(){
-        when(productService.getAll()).thenReturn(Collections.emptyList());
+    public void deleteProduct_withValidId_ReturnsStatus204() throws Exception {
+        when(productService.getById(anyLong())).thenReturn(PRODUCT);
 
+        mockMvc.perform(delete("/products/1"))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void deleteProduct_withNonValidId_ReturnsStatus404() throws Exception {
     }
 
 }
