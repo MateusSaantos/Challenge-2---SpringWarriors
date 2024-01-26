@@ -53,7 +53,7 @@ public class ProductService {
             return productRepository.save(product);
         }
         catch (org.springframework.dao.DataIntegrityViolationException ex){
-            throw new ProductValidationException("Dados fornecidos inválidos");
+            throw new ProductValidationException(String.format("Nome %s já cadastrado", product.getName()));
         }
     }
 

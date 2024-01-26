@@ -42,7 +42,7 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage(request,HttpStatus.CONFLICT,"Campo(s) invalidos"));
+                .body(new ErrorMessage(request,HttpStatus.CONFLICT,"Produto já existente"));
 
     }
 
