@@ -10,8 +10,7 @@ import org.modelmapper.PropertyMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ProductMappper {
-
+public class ProductMapper {
 
     public static Product toProduct(ProductCreateDto dto){
         return  new ModelMapper().map(dto,Product.class);
