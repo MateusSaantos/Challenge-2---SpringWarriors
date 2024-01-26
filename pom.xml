@@ -90,6 +90,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.10</version>
 				<executions>
 					<execution>
 						<goals>
@@ -102,6 +103,7 @@
 						<exclude>com/compassuol/sp/challenge/ecommerce/ECommerceApplication.*</exclude>
 						<exclude>com/compassuol/sp/challenge/ecommerce/entities/*</exclude>
 						<exclude>com/compassuol/sp/challenge/ecommerce/exception/*</exclude>
+						<exclude>com/compassuol/sp/challenge/ecommerce/config/*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
