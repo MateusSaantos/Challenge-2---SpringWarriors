@@ -51,7 +51,7 @@ Sistema de controle de versão amplamente usado para rastreamento e gerenciament
 ### 🙆‍♀️🙅💁🙋 Conheça a Spring Warriors:
 
 - 💬 Isadora Zimmer: 
-- 💬 Rhuan Lehmen: 
+- 💬 Rhuan Lehmen: https://www.linkedin.com/in/rhuan-leite/
 - 💬 Mateus Santos: https://www.linkedin.com/in/mateussantoss/
 - 💬 Vinicius Guerra: https://www.linkedin.com/in/vinicius-guerra-5528941b9
 - 💬 Winicius Girardi: https://www.linkedin.com/in/winicius-girardi/
