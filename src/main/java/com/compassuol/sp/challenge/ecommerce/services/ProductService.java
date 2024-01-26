@@ -56,11 +56,7 @@ public class ProductService {
             return productRepository.save(product);
         }
         catch (org.springframework.dao.DataIntegrityViolationException ex){
-<<<<<<< HEAD
-            throw new ProductValidationException("Campo(s) invalidos");
-=======
             throw new ProductValidationException(String.format("Nome %s já cadastrado", product.getName()));
->>>>>>> documentation
         }
     }
 
