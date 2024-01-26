@@ -28,9 +28,9 @@ public class ApiExceptionHandler {
 
         log.error("Api Error - ", ex);
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, "Campo(s) invalidos", result));
+                .body(new ErrorMessage(request, HttpStatus.UNPROCESSABLE_ENTITY, "Campo(s) invalidos", result));
     }
 
     @ExceptionHandler({ProductValidationException.class, DuplicateProductNameException.class})

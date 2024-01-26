@@ -86,6 +86,16 @@ public class ProductServiceTest {
     }
 
     @Test
+    public void updateProduct_WithSameObject_DoesNotReturn(){
+        Long productId = 1L;
+
+        when(productRepository.findById(productId)).thenReturn(Optional.of(PRODUCT));
+        when(productRepository.existsByNameAndIdNot(PRODUCT.getName(), productId)).thenReturn(false);
+
+        assertDoesNotThrow(() -> productService.updateProduct(productId, PRODUCT));
+    }
+
+    @Test
     public void getProduct_WithExistentId_ReturnsProduct(){
         Long ExistentId = 1L;
         when(productRepository.findById(ExistentId)).thenReturn(Optional.of(PRODUCT));

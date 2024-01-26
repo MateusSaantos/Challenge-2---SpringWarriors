@@ -5,7 +5,7 @@ import com.compassuol.sp.challenge.ecommerce.entities.Product;
 import com.compassuol.sp.challenge.ecommerce.services.ProductService;
 import com.compassuol.sp.challenge.ecommerce.web.dto.ProductCreateDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.ProductResponseDto;
-import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.ProductMappper;
+import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.ProductMapper;
 import com.compassuol.sp.challenge.ecommerce.web.exception.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -37,7 +37,7 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<ProductResponseDto>> getAll() {
         List<Product> products = productService.getAll();
-        return ResponseEntity.ok(ProductMappper.toListDto(products));
+        return ResponseEntity.ok(ProductMapper.toListDto(products));
     }
 
     @Operation(summary = "Listar um produto pelo Id", description = "Recurso para listar um produto específico",
@@ -51,7 +51,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDto> getById(@PathVariable Long id) {
         Product prod = productService.getById(id);
-        return ResponseEntity.ok(ProductMappper.toDto(prod));
+        return ResponseEntity.ok(ProductMapper.toDto(prod));
     }
 
     @Operation(summary = "Atualizar um produto", description = "Recurso para atualizar um produto",
@@ -66,8 +66,8 @@ public class ProductController {
     )
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDto> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductCreateDto product) {
-        Product prod = productService.updateProduct(id, ProductMappper.toProduct(product));
-        return ResponseEntity.status(HttpStatus.OK).body(ProductMappper.toDto(prod));
+        Product prod = productService.updateProduct(id, ProductMapper.toProduct(product));
+        return ResponseEntity.status(HttpStatus.OK).body(ProductMapper.toDto(prod));
 
     }
 
@@ -84,8 +84,8 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductResponseDto> create(@Valid @RequestBody ProductCreateDto productDto) {
-        Product createdProduct = productService.create(ProductMappper.toProduct(productDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(ProductMappper.toDto(createdProduct));
+        Product createdProduct = productService.create(ProductMapper.toProduct(productDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ProductMapper.toDto(createdProduct));
     }
 
     @Operation(summary = "Deletar um produto pelo Id", description = "Recurso para deletar um produto",

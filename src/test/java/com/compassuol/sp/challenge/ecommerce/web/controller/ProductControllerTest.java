@@ -1,5 +1,11 @@
 package com.compassuol.sp.challenge.ecommerce.web.controller;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.hamcrest.Matchers.hasSize;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Product;
 import com.compassuol.sp.challenge.ecommerce.exception.DuplicateProductNameException;
@@ -11,9 +17,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.compassuol.sp.challenge.ecommerce.common.ProductConstants.*;
@@ -58,6 +66,7 @@ public class ProductControllerTest {
                         .content(objectMapper.writeValueAsString(INVALID_PRODUCT_NULL_INFO)))
                 .andExpect(status().isUnprocessableEntity());
     }
+
     @Test
     public void createProduct_WithDuplicateName_ReturnsStatus409() throws Exception {
         when(productService.create(any(Product.class))).thenThrow(new DuplicateProductNameException("nome repetido"));
@@ -66,7 +75,7 @@ public class ProductControllerTest {
                 .perform(post("/products")
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(INVALID_PRODUCT_REPEATED_NAME)))
-                .andExpect(status().isConflict() );
+                .andExpect(status().isConflict());
     }
 
     @Test
@@ -74,9 +83,19 @@ public class ProductControllerTest {
         when(productService.updateProduct(anyLong(), any(Product.class))).thenReturn(UPDATED_PRODUCT);
 
         mockMvc.perform(put("/products/1")
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(UPDATED_PRODUCT)))
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(UPDATED_PRODUCT)))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void updateProduct_WithValidDataAndNotValidId_ReturnStatus404() throws Exception {
+        when(productService.updateProduct(anyLong(), any(Product.class))).thenThrow(new EntityNotFoundException("id não existente"));
+
+        mockMvc.perform(put("/products/1")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(UPDATED_PRODUCT)))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -116,7 +135,20 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void deleteProduct_withNonValidId_ReturnsStatus404() throws Exception {
+    public void deleteProduct_withNonExistentId_ReturnsStatus404() throws Exception {
+        doThrow(new EntityNotFoundException("id não encontrado")).when(productService).deleteById(anyLong());
+
+        mockMvc.perform(delete("/products/1"))
+                .andExpect(status().isNotFound());
     }
 
+    @Test
+    public void listProducts_ReturnsNoProductsAndStatus200() throws Exception {
+        when(productService.getAll()).thenReturn(Collections.emptyList());
+
+        mockMvc.perform(get("/products"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)))
+                .andExpect(status().isOk());
+    }
 }
