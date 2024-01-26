@@ -92,6 +92,13 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+						<exclude>com/compassuol/sp/challenge/ecommerce/ECommerceApplication.*</exclude>
+						<exclude>com/compassuol/sp/challenge/ecommerce/entities/*</exclude>
+						<exclude>com/compassuol/sp/challenge/ecommerce/exception/*</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
