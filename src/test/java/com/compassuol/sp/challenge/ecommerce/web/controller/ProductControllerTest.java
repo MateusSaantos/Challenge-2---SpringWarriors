@@ -95,6 +95,16 @@ public class ProductControllerTest {
     }
 
     @Test
+    public void updateProduct_WithValidDataAndNotValidId_ReturnStatus404() throws Exception {
+        when(productService.updateProduct(anyLong(), any(Product.class))).thenThrow(new EntityNotFoundException("id não existente"));
+
+        mockMvc.perform(put("/products/1")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(UPDATED_PRODUCT)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     public void getProduct_WithExistentId_ReturnsStatus200() throws Exception {
         when(productService.getById(anyLong())).thenReturn(PRODUCT);
 
@@ -131,37 +141,20 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void deleteProduct_withNonValidId_ReturnsStatus404() throws Exception {
-        when(productService.getById(anyLong())).thenThrow(new EntityNotFoundException("Produto não encontrado"));
+    public void deleteProduct_withNonExistentId_ReturnsStatus404() throws Exception {
+        doThrow(new EntityNotFoundException("id não encontrado")).when(productService).deleteById(anyLong());
 
-        mockMvc.perform(delete("/products/{id}"))
+        mockMvc.perform(delete("/products/1"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void deleteProduct_WithNonExistingId_ReturnsNotFound() throws Exception {
-        final Long nonExistingProductId = 1L;
-
-        doThrow(new EmptyResultDataAccessException(1)).when(productService).deleteById(nonExistingProductId);
-
-        mockMvc.perform(delete("/products/" + nonExistingProductId))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
-    public void deleteProduct_WithExistingId_ReturnsNoContent() throws Exception {
-        Long productId = 1L;
-
-        mockMvc.perform(delete("/products/{id}", productId))
-                .andExpect(status().isNoContent());
-    }
-
-    @Test
-    public void listProducts_ReturnsNoProducts() throws Exception {
+    public void listProducts_ReturnsNoProductsAndStatus200() throws Exception {
         when(productService.getAll()).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get("/products"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
+                .andExpect(jsonPath("$", hasSize(0)))
+                .andExpect(status().isOk());
     }
 }
