@@ -34,6 +34,7 @@ public class ProductService {
     @Transactional
     public Product updateProduct(Long id, Product product) {
 
+        Product prod = getById(id);
         String productName = product.getName();
 
         if(productRepository.existsByNameAndIdNot(productName, id))
@@ -41,7 +42,6 @@ public class ProductService {
             throw new DuplicateProductNameException(String.format("Produto com nome %s ja existe", productName));
         }
 
-        Product prod = getById(id);
         prod.setDescription(product.getDescription());
         prod.setValue(product.getValue());
         prod.setName(product.getName());
