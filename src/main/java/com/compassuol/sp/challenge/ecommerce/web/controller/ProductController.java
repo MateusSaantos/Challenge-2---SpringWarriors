@@ -58,7 +58,7 @@ public class ProductController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Produto atualizado com sucesso",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDto.class))),
-                    @ApiResponse(responseCode = "400", description = "Já existe um produto com esse nome",
+                    @ApiResponse(responseCode = "409", description = "Já existe um produto com esse nome",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "404", description = "Produto não encontrado",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))

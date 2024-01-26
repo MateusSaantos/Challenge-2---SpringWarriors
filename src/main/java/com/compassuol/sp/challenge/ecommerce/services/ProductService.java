@@ -38,7 +38,7 @@ public class ProductService {
 
         if(productRepository.existsByNameAndIdNot(productName, id))
         {
-            throw new DuplicateProductNameException(String.format("Produto com nome %s ja existe", productName));
+            throw new DuplicateProductNameException(String.format("Produto com nome {%s} ja existe", productName));
         }
 
         prod.setDescription(product.getDescription());

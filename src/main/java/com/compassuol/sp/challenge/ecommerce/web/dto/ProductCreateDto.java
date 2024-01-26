@@ -14,7 +14,7 @@ public class ProductCreateDto {
     private String name;
 
     @NotBlank
-    @Size(min=10)
+    @Size(min=10,max=255)
     private String description;
 
     @NotNull

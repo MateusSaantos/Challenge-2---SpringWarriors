@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ApiExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler({MethodArgumentNotValidException.class})
     public ResponseEntity<ErrorMessage> methodArgumentNotValidException(MethodArgumentNotValidException ex,
                                                                         HttpServletRequest request,
                                                                         BindingResult result){
@@ -41,7 +42,7 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage(request,HttpStatus.CONFLICT,"Produto já existente"));
+                .body(new ErrorMessage(request,HttpStatus.CONFLICT,ex.getMessage()));
 
     }
 
@@ -57,7 +58,24 @@ public class ApiExceptionHandler {
                 .body(new ErrorMessage(request,HttpStatus.NOT_FOUND, ex.getMessage()));
 
     }
+    @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorMessage> httpMessageNotReadableException(RuntimeException ex,HttpServletRequest request){
 
+        log.error("Api Error - ", ex);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request,HttpStatus.BAD_REQUEST, "Requisição inválida"));
+
+    }
+    @ExceptionHandler(org.springframework.web.HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ErrorMessage> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex, HttpServletRequest request){
+        log.error("Api Error - ", ex);
+        return ResponseEntity
+                .status(HttpStatus.METHOD_NOT_ALLOWED)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request,HttpStatus.METHOD_NOT_ALLOWED, "Método não permitido para esta rota"));
+    }
 
 
 
