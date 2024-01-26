@@ -10,6 +10,8 @@ public class ProductConstants {
 
     public static final Product INVALID_PRODUCT_NULL_INFO = new Product(null, null, null, -1.0F);
 
+    public static final Product INVALID_PRODUCT_EMPTY_INFO = new Product(1L , "", "", 1.0F);
+
     public static final Product INVALID_PRODUCT_REPEATED_NAME = new Product(2L, "batata", "Produto com o mesmo nome.", 3.0F);
 
     public static final Product INVALID_PRODUCT_EMPTY_NAME = new Product(3L, "", "Produto sem nome.", 4.0F);
