@@ -28,6 +28,10 @@ public class Product {
     @Min(0)
     private Float value;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
