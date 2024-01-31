@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @NoArgsConstructor
 @Entity
 @Table(name="orders")
 public class Order implements Serializable {
@@ -36,10 +36,10 @@ public class Order implements Serializable {
     @Column(name = "total_value")
     private Long totalValue;
     @Column(name = "created_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdDate;
     @Column(name = "cancel_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime cancelDate;
     @Column(name = "cancel_reason",length = 100)
     private String cancelReason;

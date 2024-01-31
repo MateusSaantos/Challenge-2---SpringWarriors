@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
@@ -31,8 +30,7 @@ public class Product implements Serializable {
     @Min(0)
     private Float value;
 
-    @OneToMany(mappedBy = "product")
-    private List<ProductInOrder> product;
+
 
     @Override
     public boolean equals(Object o) {
