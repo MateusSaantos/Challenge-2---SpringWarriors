@@ -1,7 +1,6 @@
 package com.compassuol.sp.challenge.ecommerce.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +26,6 @@ public class Product implements Serializable {
     private String description;
 
     @Column(name = "value")
-    @Min(0)
     private Float value;
 
 

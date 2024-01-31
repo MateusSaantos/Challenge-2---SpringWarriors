@@ -1,7 +1,6 @@
 package com.compassuol.sp.challenge.ecommerce.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +19,6 @@ public class ProductInOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Min(1)
     private int quantity;
     @ManyToOne
     @JoinColumn(name ="order_id",insertable = false,updatable = false)
