@@ -1,5 +1,6 @@
 package com.compassuol.sp.challenge.ecommerce.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,10 +22,11 @@ public class ProductInOrder implements Serializable {
     private Long id;
     private int quantity;
     @ManyToOne
-    @JoinColumn(name ="order_id",insertable = false,updatable = false)
+    @JoinColumn(name ="order_id")
+    @JsonIgnore
     private Order order;
     @ManyToOne
-    @JoinColumn(name ="product_id",insertable = false,updatable = false)
+    @JoinColumn(name ="product_id")
     private Product product;
 
 }

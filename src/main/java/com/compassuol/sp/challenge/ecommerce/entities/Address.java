@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
     @Column(length = 100)
     private String street;
