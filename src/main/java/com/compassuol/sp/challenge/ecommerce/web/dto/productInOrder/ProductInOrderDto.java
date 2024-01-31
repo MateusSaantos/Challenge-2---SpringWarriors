@@ -1,4 +1,4 @@
-package com.compassuol.sp.challenge.ecommerce.web.dto;
+package com.compassuol.sp.challenge.ecommerce.web.dto.productInOrder;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class OrderProductDto {
+public class ProductInOrderDto {
 
     @NotNull
     private Long productId;
