@@ -24,17 +24,12 @@ public class OrderService {
 
     @Transactional(readOnly = true)
     public List<Order> getAll(String status){
-
-        return orderRepository.findAll();
-        //ARRUMAR CODIGO ABAIXO
-       /*Sort sortByCreatedAtDesc = Sort.by(Sort.Order.desc("created_date"));
+       Sort sortByCreatedAtDesc = Sort.by(Sort.Order.desc("createdDate"));
        if (status != null && !status.isEmpty()){
-            return orderRepository.findAllByStatus(Order.Status.valueOf(status), sortByCreatedAtDesc);
+            return orderRepository.findAllByStatus(Order.Status.valueOf(status.trim().toUpperCase()), sortByCreatedAtDesc);
         }
         return orderRepository.findAll(sortByCreatedAtDesc);
-        */
     }
-
 
 
     @Transactional(readOnly = true)
@@ -50,7 +45,7 @@ public class OrderService {
     @Transactional
     public Order update(Long id, String status){
         Order existingOrder = getById(id);
-        existingOrder.setStatus(Order.Status.valueOf(status));
+        existingOrder.setStatus(Order.Status.valueOf(status.trim().toUpperCase()));
         return orderRepository.save(existingOrder);
     }
 
