@@ -1,7 +1,6 @@
 package com.compassuol.sp.challenge.ecommerce.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,20 +17,18 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name", unique = true, nullable = false)
 
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
+
     @Column(name = "description")
     @Size(min = 10)
     private String description;
 
     @Column(name = "value")
-    @Min(0)
     private Float value;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+
 
     @Override
     public boolean equals(Object o) {
