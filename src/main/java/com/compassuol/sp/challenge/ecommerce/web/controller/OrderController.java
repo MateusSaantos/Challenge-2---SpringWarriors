@@ -2,6 +2,7 @@ package com.compassuol.sp.challenge.ecommerce.web.controller;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Order;
 import com.compassuol.sp.challenge.ecommerce.services.OrderService;
+import com.compassuol.sp.challenge.ecommerce.web.dto.UpdateStatusRequestDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.OrderMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,9 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 
-import com.compassuol.sp.challenge.ecommerce.entities.Order;
-import com.compassuol.sp.challenge.ecommerce.services.OrderService;
-import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.OrderMapper;
+
 import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderCreateDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderResponseDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -68,11 +67,9 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
-
-
     @PutMapping("/{id}")
-    public ResponseEntity<OrderResponseDto> update(@PathVariable Long id, @RequestBody String status){
-        Order order = orderService.update(id, status);
+    public ResponseEntity<OrderResponseDto> update(@PathVariable Long id, @RequestBody UpdateStatusRequestDto status){
+        Order order = orderService.update(id, status.getStatus());
         return ResponseEntity.ok(OrderMapper.toDto(order));
     }
 
