@@ -12,7 +12,6 @@ public class ProductInOrderDto {
 
     @NotNull
     private Long productId;
-
     @NotBlank
     @Size(min= 1, message = "Quantidade de produto inválida")
     @Pattern(regexp = "\\d{8}", message = "O CEP deve conter apenas números")
