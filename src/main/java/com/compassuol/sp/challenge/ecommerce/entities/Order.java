@@ -1,8 +1,11 @@
 package com.compassuol.sp.challenge.ecommerce.entities;
-import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -17,11 +20,12 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @JsonIgnoreProperties("order")
     @OneToMany(mappedBy = "order")
-    private List<ProductInOrder> order;
+    private List<ProductInOrder> productInOrder;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_method", nullable = false)
@@ -46,11 +50,11 @@ public class Order implements Serializable {
 
 
 
-
     public Order(Address address, Payment paymentMethod, Double subtotalValue,
                  Double discount,List<ProductInOrder> order) {
 
-        this.order = order;
+
+        this.productInOrder = productInOrder;
         this.address = address;
         this.paymentMethod = paymentMethod;
         this.status = Status.CONFIRMED;
@@ -76,7 +80,7 @@ public class Order implements Serializable {
     }
 
     public List<ProductInOrder> getProducts() {
-        return order;
+        return productInOrder;
     }
 
 
