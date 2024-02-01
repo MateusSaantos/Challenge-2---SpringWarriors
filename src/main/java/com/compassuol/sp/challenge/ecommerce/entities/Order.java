@@ -30,11 +30,11 @@ public class Order implements Serializable {
     @Column(name = "status")
     private Status status;
     @Column(name = "subtotal_value")
-    private Long subtotalValue;
+    private Double subtotalValue;
     @Column(name = "discount")
-    private Long discount;
+    private Double discount;
     @Column(name = "total_value")
-    private Long totalValue;
+    private Double totalValue;
     @Column(name = "created_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdDate;
@@ -47,8 +47,8 @@ public class Order implements Serializable {
 
 
 
-    public Order(Address address, Payment paymentMethod, Long subtotalValue,
-                 Long discount,List<ProductInOrder> order) {
+    public Order(Address address, Payment paymentMethod, Double subtotalValue,
+                 Double discount,List<ProductInOrder> order) {
 
         this.order = order;
         this.address = address;
@@ -75,6 +75,10 @@ public class Order implements Serializable {
         }
     }
 
+    public List<ProductInOrder> getProducts() {
+        return order;
+    }
+
 
     public enum Status{
         CONFIRMED, SENT, CANCELED
@@ -88,7 +92,7 @@ public class Order implements Serializable {
         if (paymentMethod == Payment.PIX) {
             discount = (5 * subtotalValue) / 100;
         } else {
-            discount = 0L;
+            discount = 0D;
         }
         totalValue = subtotalValue - discount;
     }

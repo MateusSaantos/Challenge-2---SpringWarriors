@@ -12,19 +12,27 @@ public class OrderMapper {
         return  new ModelMapper().map(dto, Order.class);
     }
 
-    public static OrderResponseDto toDto(Order order){
-        PropertyMap<Order, OrderResponseDto> props = new PropertyMap<Order, OrderResponseDto>() {
-            @Override
-            protected void configure() {
+    public static OrderResponseDto toDto(Order order) {
 
-            }
-        };
-        ModelMapper mapper = new ModelMapper();
-        mapper.addMappings(props);
-        return   mapper.map(order,OrderResponseDto.class);
+            PropertyMap<Order, OrderResponseDto> props = new PropertyMap<Order, OrderResponseDto>() {
+                @Override
+                protected void configure() {
+                    map().setSubtotalValue(source.getSubtotalValue());
+                    map().setDiscount(source.getDiscount());
+                    map().setTotalValue(source.getTotalValue());
+                    map().setCreatedDate(source.getCreatedDate().toString());
+                    map().setStatus(source.getStatus().name());
+                    map().setPaymentMethod(source.getPaymentMethod().name());
+                    map().setAddress(AddressMapper.toDto(source.getAddress()));
+                    map().setProducts(ProductInOrderMapper.toDtoList(source.getProducts()));
+                }
+            };
+            ModelMapper mapper = new ModelMapper();
+            mapper.addMappings(props);
+
+            return mapper.map(order, OrderResponseDto.class);
+        }
+
+
     }
 
-
-
-
-}

@@ -8,7 +8,7 @@ import org.modelmapper.PropertyMap;
 public class AddressMapper {
 
 
-    public AddressResponseDto toDto(Address adress){
+    public static AddressResponseDto toDto(Address adress){
 
         PropertyMap<Address, AddressResponseDto> props = new PropertyMap<Address, AddressResponseDto>() {
             @Override

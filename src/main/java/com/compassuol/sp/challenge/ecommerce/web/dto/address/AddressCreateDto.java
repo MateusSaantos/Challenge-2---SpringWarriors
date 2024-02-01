@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class OrderAddressDto {
+public class AddressCreateDto {
 
     @NotBlank
     private Integer number;

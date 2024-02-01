@@ -10,13 +10,13 @@ public class ProductInOrderMapper {
 
 
 
-    private ProductInOrderResponseDto toDto(ProductInOrder productInOrder){
+    private static ProductInOrderResponseDto toDto(ProductInOrder productInOrder){
         ProductInOrderResponseDto dto = new ProductInOrderResponseDto();
         dto.setProduct_id(productInOrder.getProduct().getId());
         dto.setQuantity(productInOrder.getQuantity());
         return dto;
     }
-    private List<ProductInOrderResponseDto> toDtoList(List<ProductInOrder> productInOrder){
+    public static List<ProductInOrderResponseDto> toDtoList(List<ProductInOrder> productInOrder){
         return productInOrder.stream().map(prod -> toDto(prod)).collect(Collectors.toList());
     }
 }
