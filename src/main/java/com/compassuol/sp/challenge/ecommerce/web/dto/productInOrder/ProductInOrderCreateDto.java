@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ProductInOrderDto {
+public class ProductInOrderCreateDto {
 
     @NotNull
     private Long productId;

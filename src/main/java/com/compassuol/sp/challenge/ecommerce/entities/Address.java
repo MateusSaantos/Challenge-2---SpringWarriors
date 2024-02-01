@@ -21,7 +21,7 @@ public class Address implements Serializable {
     private Long id;
     @Column(length = 100)
     private String street;
-    private int number;
+    private Integer number;
     @Column(length = 100)
     private String complement;
     @Column(length = 50)

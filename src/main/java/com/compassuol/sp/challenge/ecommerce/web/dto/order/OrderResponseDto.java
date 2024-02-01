@@ -1,24 +1,28 @@
 package com.compassuol.sp.challenge.ecommerce.web.dto.order;
 
+import com.compassuol.sp.challenge.ecommerce.entities.Order;
 import com.compassuol.sp.challenge.ecommerce.web.dto.address.AddressResponseDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.productInOrder.ProductInOrderResponseDto;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
-@Setter
 @Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class OrderResponseDto {
 
-    private Long id;
     private List<ProductInOrderResponseDto> products;
     private AddressResponseDto address;
-    private String paymentMethod;
+    private Order.Payment paymentMethod;
     private Double subtotalValue;
     private Double discount;
     private Double totalValue;
-    private String createdDate;
-    private String status;
-
+    private LocalDateTime createdDate;
+    private Order.Status status;
+    private LocalDateTime cancelDate;
+    private String cancelReason;
 
 }

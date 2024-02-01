@@ -1,7 +1,7 @@
 package com.compassuol.sp.challenge.ecommerce.web.dto.order;
 
 import com.compassuol.sp.challenge.ecommerce.web.dto.address.AddressCreateDto;
-import com.compassuol.sp.challenge.ecommerce.web.dto.productInOrder.ProductInOrderDto;
+import com.compassuol.sp.challenge.ecommerce.web.dto.productInOrder.ProductInOrderCreateDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -11,7 +11,7 @@ import java.util.List;
 public class OrderCreateDto {
 
     @NotNull
-    private List<ProductInOrderDto> products;
+    private List<ProductInOrderCreateDto> products;
 
     @NotBlank
     private AddressCreateDto address;

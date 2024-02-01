@@ -21,9 +21,10 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @JsonIgnoreProperties("order")
-    @OneToMany(mappedBy = "order")
-    private List<ProductInOrder> productInOrder;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ProductInOrder> products;
 
+    @JsonIgnoreProperties("order")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
@@ -40,10 +41,10 @@ public class Order implements Serializable {
     @Column(name = "total_value")
     private Double totalValue;
     @Column(name = "created_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime createdDate;
     @Column(name = "cancel_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime cancelDate;
     @Column(name = "cancel_reason",length = 100)
     private String cancelReason;
@@ -54,7 +55,7 @@ public class Order implements Serializable {
                  Double discount,List<ProductInOrder> order) {
 
 
-        this.productInOrder = productInOrder;
+        this.products = products;
         this.address = address;
         this.paymentMethod = paymentMethod;
         this.status = Status.CONFIRMED;
@@ -77,10 +78,6 @@ public class Order implements Serializable {
         if (this.status != Status.CANCELED && status == Status.SENT) {
             this.status = Status.SENT;
         }
-    }
-
-    public List<ProductInOrder> getProducts() {
-        return productInOrder;
     }
 
 
