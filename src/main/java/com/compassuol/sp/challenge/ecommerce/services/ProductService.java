@@ -1,16 +1,17 @@
 package com.compassuol.sp.challenge.ecommerce.services;
-
-
 import com.compassuol.sp.challenge.ecommerce.entities.Product;
 import com.compassuol.sp.challenge.ecommerce.exception.DuplicateProductNameException;
 import com.compassuol.sp.challenge.ecommerce.exception.EntityNotFoundException;
 import com.compassuol.sp.challenge.ecommerce.exception.ProductValidationException;
+import com.compassuol.sp.challenge.ecommerce.web.dto.order.ProductOrderDto;
 import com.compassuol.sp.challenge.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.stream.Collectors;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -65,4 +66,20 @@ public class ProductService {
         productRepository.delete(product);
     }
 
+    //PEGANDO OS PREÇOS DOS PRODUTOS
+    @Transactional
+    public Map<Long, Float> getProductPrices(List<ProductOrderDto> productDtos) {
+        List<Long> productIds = productDtos.stream()
+                .map(ProductOrderDto::getProductId)
+                .collect(Collectors.toList());
+
+        List<Product> products = productRepository.findAllById(productIds);
+
+        Map<Long, Float> productPrices = new HashMap<>();
+
+        for (Product product : products) {
+            productPrices.put(product.getId(), product.getValue());
+        }
+        return productPrices;
+    }
 }

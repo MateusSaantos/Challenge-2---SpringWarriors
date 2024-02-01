@@ -1,7 +1,7 @@
 package com.compassuol.sp.challenge.ecommerce.web.dto.order;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Order;
-import com.compassuol.sp.challenge.ecommerce.web.dto.address.AddressResponseDto;
+import com.compassuol.sp.challenge.ecommerce.web.dto.address.AddressCreateDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.productInOrder.ProductInOrderResponseDto;
 import lombok.*;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class OrderResponseDto {
 
     private List<ProductInOrderResponseDto> products;
-    private AddressResponseDto address;
+    private AddressCreateDto address;
     private Order.Payment paymentMethod;
     private Double subtotalValue;
     private Double discount;

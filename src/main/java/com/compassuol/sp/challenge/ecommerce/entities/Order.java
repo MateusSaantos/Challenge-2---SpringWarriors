@@ -1,5 +1,7 @@
 package com.compassuol.sp.challenge.ecommerce.entities;
 
+import com.compassuol.sp.challenge.ecommerce.entities.Address;
+import com.compassuol.sp.challenge.ecommerce.entities.ProductInOrder;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -96,6 +98,17 @@ public class Order implements Serializable {
             discount = 0D;
         }
         totalValue = subtotalValue - discount;
+    }
+
+    public void calculateSubtotalValue(List<ProductInOrder> productsInOrder) {
+        subtotalValue = 0D;
+
+        for (ProductInOrder productInOrder : productsInOrder) {
+            Float productPrice = productInOrder.getProduct().getValue();
+
+            subtotalValue += (Float) (productPrice * productInOrder.getQuantity());
+
+        }
     }
 
     @Override

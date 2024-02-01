@@ -4,9 +4,14 @@ import com.compassuol.sp.challenge.ecommerce.entities.Order;
 import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderCreateDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderResponseDto;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 
 
 public class OrderMapper {
+
+    public static Order toEntity(OrderCreateDto orderCreateDto) {
+        return new ModelMapper().map(orderCreateDto, Order.class);
+    }
 
     public static Order toOrder(OrderCreateDto dto){
         return  new ModelMapper().map(dto, Order.class);
@@ -21,5 +26,5 @@ public class OrderMapper {
         }
 
 
-    }
+}
 

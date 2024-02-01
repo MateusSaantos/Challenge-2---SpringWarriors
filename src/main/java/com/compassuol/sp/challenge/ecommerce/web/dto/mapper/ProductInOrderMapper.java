@@ -18,7 +18,9 @@ public class ProductInOrderMapper {
         });
         return modelMapper.map(productInOrder, ProductInOrderResponseDto.class);
     }
-    public static List<ProductInOrderResponseDto> toDtoList(List<ProductInOrder> productInOrder){
-        return productInOrder.stream().map(prod -> toDto(prod)).collect(Collectors.toList());
-    }
+    public static List<ProductInOrderResponseDto> toDtoList(List<ProductInOrder> productInOrder) {
+        return productInOrder.stream().map(prod -> toDto(prod)).collect(Collectors.toList());}
+
+
 }
+

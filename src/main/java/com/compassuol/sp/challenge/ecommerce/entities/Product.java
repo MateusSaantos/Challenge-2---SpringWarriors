@@ -28,6 +28,8 @@ public class Product implements Serializable {
     @Column(name = "value")
     private Float value;
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

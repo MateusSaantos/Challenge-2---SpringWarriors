@@ -18,7 +18,9 @@ public class OrderService {
         return orderRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(String.format("Order id=%s não encontrado",id)));
     }
+    public Order createOrder(Order order) {
 
-
+        return orderRepository.save(order);
+    }
 
 }
