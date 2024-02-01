@@ -3,8 +3,8 @@ package com.compassuol.sp.challenge.ecommerce.web.controller;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Product;
 import com.compassuol.sp.challenge.ecommerce.services.ProductService;
-import com.compassuol.sp.challenge.ecommerce.web.dto.ProductCreateDto;
-import com.compassuol.sp.challenge.ecommerce.web.dto.ProductResponseDto;
+import com.compassuol.sp.challenge.ecommerce.web.dto.product.ProductCreateDto;
+import com.compassuol.sp.challenge.ecommerce.web.dto.product.ProductResponseDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.ProductMapper;
 import com.compassuol.sp.challenge.ecommerce.web.exception.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
