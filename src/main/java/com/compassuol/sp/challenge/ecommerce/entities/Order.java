@@ -1,7 +1,5 @@
 package com.compassuol.sp.challenge.ecommerce.entities;
 
-import com.compassuol.sp.challenge.ecommerce.entities.Address;
-import com.compassuol.sp.challenge.ecommerce.entities.ProductInOrder;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -81,10 +79,13 @@ public class Order implements Serializable {
             this.status = Status.SENT;
         }
     }
+    public void attStatus(String value){
+            this.status = Status.valueOf(value);
 
+    }
 
     public enum Status{
-        CONFIRMED, SENT, CANCELED
+        CONFIRMED,SENT,CANCELED
     }
 
     public enum Payment{

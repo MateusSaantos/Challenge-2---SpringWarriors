@@ -4,36 +4,15 @@ package com.compassuol.sp.challenge.ecommerce.web.controller;
 import com.compassuol.sp.challenge.ecommerce.entities.Order;
 import com.compassuol.sp.challenge.ecommerce.services.OrderService;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.OrderMapper;
-import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderResponseDto;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-
-
-import com.compassuol.sp.challenge.ecommerce.entities.Order;
-import com.compassuol.sp.challenge.ecommerce.entities.ProductInOrder;
-import com.compassuol.sp.challenge.ecommerce.services.OrderService;
-import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderResponseDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderCreateDto;
-import com.compassuol.sp.challenge.ecommerce.services.ProductService;
-import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.OrderMapper;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderResponseDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Tag(name = "Pedidos", description = "Aqui estão contidas todas as operações relacionadas à criação, edição, cancelamento e leitura de um pedido.")
 @RequiredArgsConstructor
@@ -42,6 +21,12 @@ import java.util.stream.Collectors;
 public class OrderController {
 
     private final OrderService orderService;
+
+    @GetMapping
+    public ResponseEntity<List<OrderResponseDto>> getAll(@RequestParam(name = "status", required = false) String status){
+        List<Order> orders = orderService.getAll(status);
+        return ResponseEntity.ok(OrderMapper.toListDto(orders));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponseDto> getById(@PathVariable Long id) {
@@ -65,4 +50,11 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OrderResponseDto> update(@PathVariable Long id, @RequestBody String status){
+        Order order = orderService.update(id, status);
+        return ResponseEntity.ok(OrderMapper.toDto(order));
+    }
 }

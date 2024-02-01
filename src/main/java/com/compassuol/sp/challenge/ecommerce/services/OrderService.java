@@ -8,10 +8,25 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
+
+    @Transactional(readOnly = true)
+    public List<Order> getAll(String status){
+        return orderRepository.findAll();
+        //ARRUMAR CODIGO ABAIXO
+       /*Sort sortByCreatedAtDesc = Sort.by(Sort.Order.desc("created_date"));
+       if (status != null && !status.isEmpty()){
+            return orderRepository.findAllByStatus(Order.Status.valueOf(status), sortByCreatedAtDesc);
+        }
+        return orderRepository.findAll(sortByCreatedAtDesc);
+        */
+
+    }
 
     @Transactional(readOnly = true)
     public Order getById(Long id){
@@ -22,5 +37,15 @@ public class OrderService {
 
         return orderRepository.save(order);
     }
+
+    @Transactional
+    public Order update(Long id, String status){
+        Order existingOrder = getById(id);
+        existingOrder.setStatus(Order.Status.valueOf(status));
+        return orderRepository.save(existingOrder);
+    }
+
+
+
 
 }
