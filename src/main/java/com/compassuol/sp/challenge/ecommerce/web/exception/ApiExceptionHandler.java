@@ -33,7 +33,7 @@ public class ApiExceptionHandler {
                 .body(new ErrorMessage(request, HttpStatus.UNPROCESSABLE_ENTITY, "Campo(s) invalidos", result));
     }
 
-    @ExceptionHandler({ProductValidationException.class, DuplicateProductNameException.class})
+    @ExceptionHandler({ProductValidationException.class, DuplicateProductNameException.class,IllegalArgumentException.class})
     public ResponseEntity<ErrorMessage> dataIntegrityViolationException(RuntimeException ex,
                                                                         HttpServletRequest request
     ) {

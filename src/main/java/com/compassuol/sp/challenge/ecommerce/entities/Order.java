@@ -67,18 +67,11 @@ public class Order implements Serializable {
         calculateTotalValue();
     }
 
-    public void setStatus(String cancelReason){
-        if (this.status != Status.SENT &&  LocalDateTime.parse(Instant.now().toString()).toLocalDate().until(createdDate.toLocalDate()).getDays() <= 90){
-            this.status = Status.CANCELED;
-            this.cancelDate = LocalDateTime.parse(Instant.now().toString());
-            this.cancelReason = cancelReason;
-        }
-    }
+
     public void setStatus(Status status){
-        if (this.status != Status.CANCELED && status == Status.SENT) {
-            this.status = Status.SENT;
+            this.status = status;
         }
-    }
+
     public void attStatus(String value){
             this.status = Status.valueOf(value);
 

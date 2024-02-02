@@ -69,7 +69,7 @@ public class OrderController {
     }
     @DeleteMapping("/{id}/cancel")
     public ResponseEntity<OrderResponseDto> delete(@PathVariable Long id,@RequestBody CancelReasonDto cancelReason){
-        Order order =orderService.delete(orderService.getById(id), cancelReason.getCancelReason());
+        Order order =orderService.changeStatusToCancel(id, cancelReason.getCancelReason());
         return ResponseEntity.status(HttpStatus.OK).body(OrderMapper.toDto(order));
     }
 

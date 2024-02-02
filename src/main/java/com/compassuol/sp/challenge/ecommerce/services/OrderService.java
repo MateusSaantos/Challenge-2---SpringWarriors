@@ -45,9 +45,22 @@ public class OrderService {
     }
 
 
-    public Order delete(Order order,String cancelReason){
+    @Transactional
+    public Order changeStatusToCancel(Long id, String cancelReason){
+        Order order = orderRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(String.format("Order id=%s não encontrado",id)));
+
+        if(order.getStatus().equals(Order.Status.CANCELED)){
+            throw new IllegalArgumentException("Pedido já está cancelado");
+        }
+        if(order.getCreatedDate()
+                .plusDays(90)
+                .isBefore(java.time.LocalDateTime.now())){
+            throw new IllegalArgumentException("Pedido não pode ser cancelado após 90 dia de sua criação");
+        }
         order.setCancelReason(cancelReason);
-        orderRepository.save(order);
-        return order;
+        order.setStatus(Order.Status.CANCELED);
+        return orderRepository.save(order);
+
     }
 }
