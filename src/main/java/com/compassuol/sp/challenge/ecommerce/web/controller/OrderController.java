@@ -2,22 +2,17 @@ package com.compassuol.sp.challenge.ecommerce.web.controller;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Order;
 import com.compassuol.sp.challenge.ecommerce.services.OrderService;
+import com.compassuol.sp.challenge.ecommerce.web.dto.CancelReasonDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.UpdateStatusRequestDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.OrderMapper;
+import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderCreateDto;
+import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-
-
-
-import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderCreateDto;
-import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderResponseDto;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,5 +67,11 @@ public class OrderController {
         Order order = orderService.update(id, status.getStatus());
         return ResponseEntity.ok(OrderMapper.toDto(order));
     }
+    @DeleteMapping("/{id}/cancel")
+    public ResponseEntity<OrderResponseDto> delete(@PathVariable Long id,@RequestBody CancelReasonDto cancelReason){
+        Order order =orderService.delete(orderService.getById(id), cancelReason.getCancelReason());
+        return ResponseEntity.status(HttpStatus.OK).body(OrderMapper.toDto(order));
+    }
+
 
 }
