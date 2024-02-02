@@ -1,11 +1,9 @@
 package com.compassuol.sp.challenge.ecommerce.web.dto.mapper;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Order;
-import com.compassuol.sp.challenge.ecommerce.entities.Product;
 import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderCreateDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderResponseDto;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +16,11 @@ public class OrderMapper {
     }
 
     public static Order toOrder(OrderCreateDto dto){
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.typeMap(OrderCreateDto.class, Order.class).addMappings(mapper -> {
+            mapper.map(src -> ProductInOrderMapper.toProductInOrderList(dto.getProducts()), Order::setProducts);
+            mapper.map(src -> AddressMapper.toAddress(dto.getAddress()), Order::setAddress);
+        });
         return  new ModelMapper().map(dto, Order.class);
     }
 

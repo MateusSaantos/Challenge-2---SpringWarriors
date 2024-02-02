@@ -6,16 +6,15 @@ import org.modelmapper.ModelMapper;
 
 public class AddressMapper {
 
-
-
     public static AddressCreateDto toDto(Address address){
         ModelMapper mapper = new ModelMapper();
         return   mapper.map(address, AddressCreateDto.class);
 
 
     }
-    public Address toAddress(AddressCreateDto dto){
-        return  new ModelMapper().map(dto, Address.class);
+    public static Address toAddress(AddressCreateDto dto){
+        ModelMapper mapper = new ModelMapper();
+        return  mapper.map(dto, Address.class);
     }
 
 

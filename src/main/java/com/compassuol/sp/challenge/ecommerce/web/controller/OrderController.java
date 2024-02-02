@@ -47,19 +47,9 @@ public class OrderController {
     }
     @PostMapping
     public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderCreateDto orderCreateDto) {
-        Order order = OrderMapper.toEntity(orderCreateDto);
-
-        // Lista de produtos
-        //List<ProductInOrder> productsInOrder = order.getOrder();
-
-        // Calcula o SUBTOTAL
-        //order.calculateSubtotalValue(productsInOrder);
-
-        // Calcula o Total
-        //order.calculateTotalValue();
-        Order createdOrder = orderService.createOrder(order);
-        OrderResponseDto responseDto = OrderMapper.toDto(createdOrder);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+        Order createdOrder = OrderMapper.toOrder(orderCreateDto);
+        orderService.createOrder(createdOrder);
+        return ResponseEntity.status(HttpStatus.CREATED).body(OrderMapper.toDto(createdOrder));
     }
 
     @PutMapping("/{id}")

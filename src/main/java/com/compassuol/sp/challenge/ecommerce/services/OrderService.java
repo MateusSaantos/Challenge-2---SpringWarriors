@@ -1,8 +1,12 @@
 package com.compassuol.sp.challenge.ecommerce.services;
 
+import com.compassuol.sp.challenge.ecommerce.entities.Address;
 import com.compassuol.sp.challenge.ecommerce.entities.Order;
+import com.compassuol.sp.challenge.ecommerce.entities.ProductInOrder;
 import com.compassuol.sp.challenge.ecommerce.exception.EntityNotFoundException;
+import com.compassuol.sp.challenge.ecommerce.repository.AddressRepository;
 import com.compassuol.sp.challenge.ecommerce.repository.OrderRepository;
+import com.compassuol.sp.challenge.ecommerce.repository.ProductInOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,7 +20,8 @@ import java.util.List;
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
-
+    private final ProductInOrderRepository productInOrderService;
+    private final AddressRepository addressRepository;
     @Transactional(readOnly = true)
     public List<Order> getAll(String status){
        Sort sortByCreatedAtDesc = Sort.by(Sort.Order.desc("createdDate"));
@@ -32,8 +37,17 @@ public class OrderService {
         return orderRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(String.format("Order id=%s não encontrado",id)));
     }
+
+    @Transactional
     public Order createOrder(Order order) {
 
+        Address address=addressRepository.save(order.getAddress());
+        address.setOrder(order);
+        order.setAddress(address);
+        List<ProductInOrder> products=order.getProducts();
+        List<ProductInOrder>saved=productInOrderService.saveAll(products);
+        products.stream().forEach(p->p.setOrder(order));
+        order.setProducts(saved);
         return orderRepository.save(order);
     }
 
