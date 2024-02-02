@@ -1,138 +1,229 @@
 {
 	"info": {
-		"_postman_id": "3a50fe92-0570-4632-8c47-86c7b9c19b34",
-		"name": "2º SPRINGBOOT Challenge - Spring Warrios",
+		"_postman_id": "d3c3f273-51ed-41d6-b8b1-e996f270755d",
+		"name": "Api E-Commerce Compass",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "32325651"
+		"_exporter_id": "32251070"
 	},
 	"item": [
 		{
-			"name": "Products - Create",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"string\",\r\n    \"description\": \"stringawsdxcv\",\r\n    \"value\": \"0\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Product",
+			"item": [
+				{
+					"name": "GET - Get Product by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"1"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/products",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"products"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Products - Get Id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/products/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"products",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Products - Get All",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"PS4\",\r\n    \"description\": \"um novinho PS4\",\r\n    \"value\": \"3000\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "PUT - Change Product by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"bbbb\",\r\n    \"description\":\"AAAAAAAAAAAAA\",\r\n    \"value\":10.30\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"1"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/products",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"products"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Products - Update Product",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"string\",\r\n    \"description\": \"stringawsdxcv\",\r\n    \"value\": \"0\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "GET - Get All Products",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "POST -  Create Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"jao\",\r\n    \"description\":\"mareaturbo\",\r\n    \"value\":3.40\r\n\r\n\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/products/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"products",
-						"1"
-					]
+				{
+					"name": "DELETE - Remove Product by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Products - Delete",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/products/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"products",
-						"1"
-					]
+			"name": "Order",
+			"item": [
+				{
+					"name": "GET - GET ALL ORDERS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - GET ORDER BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/orders/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - CREATE NEW ORDER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"products\": [\r\n{\r\n\"productId\": 1,\r\n\"quantity\": 2\r\n},\r\n{\r\n\"productId\": 2,\r\n\"quantity\": 5\r\n}\r\n],\r\n\"address\": {\r\n\"number\": 10,\r\n\"complement\": \"Próximo a av. Pitanga\",\r\n\"postalCode\": \"31333333\"\r\n},\r\n\"paymentMethod\": \"PIX\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT - CHANGE ORDER STATUS",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/orders/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - CHANGE ORDER STATUS TO CANCEL",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }
