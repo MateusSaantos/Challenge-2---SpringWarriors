@@ -1,17 +1,22 @@
 package com.compassuol.sp.challenge.ecommerce.services;
 
-import com.compassuol.sp.challenge.ecommerce.entities.Address;
 import com.compassuol.sp.challenge.ecommerce.entities.Order;
+import com.compassuol.sp.challenge.ecommerce.entities.Product;
 import com.compassuol.sp.challenge.ecommerce.entities.ProductInOrder;
 import com.compassuol.sp.challenge.ecommerce.exception.EntityNotFoundException;
 import com.compassuol.sp.challenge.ecommerce.repository.AddressRepository;
 import com.compassuol.sp.challenge.ecommerce.repository.OrderRepository;
 import com.compassuol.sp.challenge.ecommerce.repository.ProductInOrderRepository;
+import com.compassuol.sp.challenge.ecommerce.repository.ProductRepository;
+import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.OrderMapper;
+import com.compassuol.sp.challenge.ecommerce.web.dto.order.OrderCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,6 +27,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductInOrderRepository productInOrderService;
     private final AddressRepository addressRepository;
+    private final ProductRepository productRepository;
+
     @Transactional(readOnly = true)
     public List<Order> getAll(String status){
        Sort sortByCreatedAtDesc = Sort.by(Sort.Order.desc("createdDate"));
@@ -39,14 +46,33 @@ public class OrderService {
     }
 
     @Transactional
-    public Order createOrder(Order order) {
-
-        Address address=addressRepository.save(order.getAddress());
-        address.setOrder(order);
-        order.setAddress(address);
+    public Order createOrder(OrderCreateDto dto) {
+        System.out.println(dto.getPaymentMethod());
+        Order order =OrderMapper.toOrder(dto);
+        Double doubleAux=0D;
+        List <Product> listProducts=new ArrayList<>();
+        for(ProductInOrder product:order.getProducts()){
+            Product aux = productRepository.findById(product.getId()).orElseThrow(
+                    () -> new EntityNotFoundException(String.format("Produto id=%s não encontrado",product.getId())));
+            Float price = aux.getValue();
+            int quantity = product.getQuantity();
+            doubleAux+=price*quantity;
+        }
+        order.setSubtotalValue(doubleAux);
+        if(order.getPaymentMethod().equals(Order.Payment.PIX)){
+            order.setDiscount(0.05);
+        } else{
+            order.setDiscount(0D);
+        }
+        order.setCreatedDate(LocalDateTime.now());
+        order.setTotalValue(order.getSubtotalValue()-(order.getDiscount()* order.getSubtotalValue()));
+        //Address address=addressRepository.save(order.getAddress());
+        order.setStatus(Order.Status.CONFIRMED);
+       // address.setOrder(order);
+        //order.setAddress(address);
         List<ProductInOrder> products=order.getProducts();
         List<ProductInOrder>saved=productInOrderService.saveAll(products);
-        products.stream().forEach(p->p.setOrder(order));
+        saved.forEach(p->p.setOrder(order));
         order.setProducts(saved);
         return orderRepository.save(order);
     }

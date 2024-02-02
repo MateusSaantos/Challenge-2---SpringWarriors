@@ -21,7 +21,7 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @JsonIgnoreProperties("order")
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<ProductInOrder> products;
 
     @JsonIgnoreProperties("order")

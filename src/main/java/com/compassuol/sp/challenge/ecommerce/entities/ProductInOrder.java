@@ -20,8 +20,8 @@ public class ProductInOrder implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
     private int quantity;
-    @ManyToOne
-    @JoinColumn(name ="order_id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
     private Order order;
     @ManyToOne
     @JoinColumn(name ="product_id")

@@ -1,5 +1,6 @@
 package com.compassuol.sp.challenge.ecommerce.web.dto.order;
 
+import com.compassuol.sp.challenge.ecommerce.entities.Order;
 import com.compassuol.sp.challenge.ecommerce.web.dto.address.AddressCreateDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.productInOrder.ProductInOrderCreateDto;
 import jakarta.validation.constraints.NotBlank;
@@ -17,7 +18,7 @@ public class OrderCreateDto {
     private AddressCreateDto address;
 
     @NotBlank
-    private String paymentMethod;
+    private Order.Payment paymentMethod;
 
 
 
