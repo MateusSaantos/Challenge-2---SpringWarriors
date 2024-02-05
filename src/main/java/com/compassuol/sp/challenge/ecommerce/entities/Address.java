@@ -2,10 +2,7 @@ package com.compassuol.sp.challenge.ecommerce.entities;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -14,6 +11,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Table(name = "address")
 public class Address implements Serializable {
     @Id
@@ -31,7 +29,4 @@ public class Address implements Serializable {
     private String state;
     @Column(length=8)
     private String postalCode;
-
-    @OneToOne(mappedBy = "address")
-    private Order order;
 }

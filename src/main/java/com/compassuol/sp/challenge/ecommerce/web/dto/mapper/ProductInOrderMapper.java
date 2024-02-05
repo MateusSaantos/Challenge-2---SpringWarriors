@@ -14,9 +14,6 @@ public class ProductInOrderMapper {
 
     private static ProductInOrderResponseDto toDto(ProductInOrder productInOrder){
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.typeMap(ProductInOrder.class, ProductInOrderResponseDto.class).addMappings(mapper -> {
-            mapper.map(src -> productInOrder.getProduct().getId(), ProductInOrderResponseDto::setProduct_id);
-        });
         return modelMapper.map(productInOrder, ProductInOrderResponseDto.class);
     }
     public static List<ProductInOrderResponseDto> toDtoList(List<ProductInOrder> productInOrder) {
@@ -25,9 +22,6 @@ public class ProductInOrderMapper {
 
     public static ProductInOrder toProductInOrder(ProductInOrderCreateDto productInOrderCreateDto) {
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.typeMap(ProductInOrderCreateDto.class,ProductInOrder.class).addMappings(mapper -> {
-            mapper.map(src -> productInOrderCreateDto.getProductId(), ProductInOrder::setProduct);
-        });
         return modelMapper.map(productInOrderCreateDto, ProductInOrder.class);
     }
     public static List<ProductInOrder> toProductInOrderList(List<ProductInOrderCreateDto> productInOrderCreateDto) {
