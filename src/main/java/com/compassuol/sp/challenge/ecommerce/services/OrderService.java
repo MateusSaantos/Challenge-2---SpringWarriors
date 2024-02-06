@@ -66,14 +66,11 @@ public class OrderService {
         }
         order.setCreatedDate(LocalDateTime.now());
         order.setTotalValue(order.getSubtotalValue()-(order.getDiscount()* order.getSubtotalValue()));
-        //Address address=addressRepository.save(order.getAddress());
         order.setStatus(Order.Status.CONFIRMED);
-       // address.setOrder(order);
-        //order.setAddress(address);
-        List<ProductInOrder> products=order.getProducts();
-        List<ProductInOrder>saved=productInOrderService.saveAll(products);
-        saved.forEach(p->p.setOrder(order));
-        order.setProducts(saved);
+
+        // Corrigir map
+        order.getProducts().forEach(product -> product.setId(null));
+
         return orderRepository.save(order);
     }
 
