@@ -2,31 +2,33 @@ package com.compassuol.sp.challenge.ecommerce.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@ToString
 @Table(name="orders")
 public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @JsonIgnoreProperties("order")
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<ProductInOrder> products;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "order_id")
+    private List<ProductInOrder> products = new ArrayList<>();
 
-    @JsonIgnoreProperties("order")
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "address_id")
     private Address address;
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_method", nullable = false)
@@ -40,41 +42,15 @@ public class Order implements Serializable {
     private Double discount;
     @Column(name = "total_value")
     private Double totalValue;
-    @Column(name = "created_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @Column(name = "created_date", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdDate;
-    @Column(name = "cancel_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @Column(name = "cancel_date", columnDefinition = "TIMESTAMP")
     private LocalDateTime cancelDate;
     @Column(name = "cancel_reason",length = 100)
     private String cancelReason;
 
-
-
-    public Order(Address address, Payment paymentMethod, Double subtotalValue,
-                 Double discount,List<ProductInOrder> order) {
-
-
-        this.products = products;
-        this.address = address;
-        this.paymentMethod = paymentMethod;
-        this.status = Status.CONFIRMED;
-        this.subtotalValue = subtotalValue;
-        this.discount = discount;
-        this.createdDate = LocalDateTime.parse(Instant.now().toString());
-        this.cancelDate = null;
-        this.cancelReason = null;
-        calculateTotalValue();
-    }
-
-
-    public void setStatus(Status status){
-            this.status = status;
-        }
-
     public void attStatus(String value){
-            this.status = Status.valueOf(value);
-
+        this.status = Status.valueOf(value);
     }
 
     public enum Status{
@@ -92,17 +68,6 @@ public class Order implements Serializable {
             discount = 0D;
         }
         totalValue = subtotalValue - discount;
-    }
-
-    public void calculateSubtotalValue(List<ProductInOrder> productsInOrder) {
-        subtotalValue = 0D;
-
-        for (ProductInOrder productInOrder : productsInOrder) {
-            Float productPrice = productInOrder.getProduct().getValue();
-
-            subtotalValue += (Float) (productPrice * productInOrder.getQuantity());
-
-        }
     }
 
     @Override

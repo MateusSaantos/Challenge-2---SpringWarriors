@@ -18,7 +18,7 @@ public class OrderCreateDto {
     private AddressCreateDto address;
 
     @NotBlank
-    private Order.Payment paymentMethod;
+    private String paymentMethod;
 
 
 
